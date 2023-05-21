@@ -1,0 +1,73 @@
+# Note: Indentation here is of 2 spaces.
+
+name: Generate website
+
+
+on:
+  workflow_dispatch: {}
+
+  repository_dispatch:
+    types: [generate]
+
+  push:
+    branches:
+      - master
+
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          ref: master
+
+      - name: Install prerequisites
+        run: sudo apt install hugo
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v3
+
+      - name: Run the generation script
+        run: ./generate.sh
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./public
+    # End of steps.
+  # End of generate.
+
+  deploy:
+    needs: generate
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+    # End of steps.
+  # End of deploy.
+# End of jobs.
+
+
+# End of file.
