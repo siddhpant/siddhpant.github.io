@@ -12,8 +12,10 @@ hugo.linux
 # Temporary lock file while building
 /.hugo_build.lock
 
-# Blog content and theme
+# Blog content and theme (including symlinks)
 /content/
+/content
 /themes/
+/themes
 /static/*
 !/static/thonk.png
