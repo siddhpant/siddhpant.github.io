@@ -43,10 +43,13 @@ paginate = 5
 	# set a custom favicon (default is a `themeColor` square)
 	favicon = "thonk.png"
 
-	# Provide a string as a prefix for the last update date. By default, it
-	# looks like this: 2020-xx-xx [Updated: 2020-xx-xx] :: Author
+	# Provide a string as a prefix for the creation and last update date.
+	# By default, it looks like this:
+	#	Created 2020-xx-xx :: Updated 2020-xx-xx :: Author
+	# createdDatePrefix = "Created"
 	# updatedDatePrefix = "Updated"
-	updatedDatePrefix = "Touched"
+	createdDatePrefix = "crtime"
+	updatedDatePrefix = "mtime"
 
 	# set all headings to their default size (depending on browser settings)
 	# oneHeadingSize = true # default
