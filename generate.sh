@@ -36,23 +36,49 @@ cd main_content_repo/content
 for md_file in **/*.md; do
 	echo -e "\t$md_file"
 
-	start="---"	# The start of file should be a YAML delimiter.
-
 	timestamps=($(git log --follow --format=%aI -- $md_file))
+
 	created=${timestamps[-1]}
+	created_yaml="date: $created"
+
 	last_modified=${timestamps[0]}
+	last_modified_yaml="lastmod: $last_modified"
 
-	if [[ "$created" == "$last_modified" ]]; then
-		yaml_dates="date: $created\nshowLastUpdated: False"
+	# Theme has been tweaked to not show last updated if both are equal.
+	yaml_dates="$created_yaml\n$last_modified_yaml"
+
+	# Start of file should be the YAML delimiter (---) normally.
+	# If not, we just add a new front matter with yaml_dates at top.
+	# If it is,
+	#	- Check if date already exists (so we don't have to add).
+	#	- Add last updated if date already exists.
+	#	- Otherwise, prepend yaml_dates to the front matter.
+
+	delimiter="---"
+
+	if [[ "$(head -n 1 $md_file)" != "$delimiter" ]]; then
+		sed -i "1s/^/$delimiter\n$yaml_dates\n$delimiter\n\n/" $md_file
 	else
-		yaml_dates="date: $created\nlastmod: $last_modified"
-	fi
+		num_delim=0
+		yaml_dates=""
 
+		while IFS= read -r line; do
+			if [[ "$line" == "$delimiter" ]]; then
+				num_delim+=1
+				if [[ $num_delim == 2 ]]; then
+					break
+				else
+					continue
+				fi
+			fi
 
-	if [[ "$(head -n 1 $md_file)" == "$start" ]]; then
-		sed -i "1s/^.*$/$start\n$yaml_dates\n/" $md_file
-	else
-		sed -i "1s/^/$start\n$yaml_dates\n$start\n/" $md_file
+			if [[ "${line:0:6}" == "date: " ]]; then
+				yaml_dates="$last_modified_yaml"
+				break
+			fi
+		done
+
+		sed -i "1s/^.*$/$delimiter\n$yaml_dates\n/" $md_file
 	fi
 done
 
