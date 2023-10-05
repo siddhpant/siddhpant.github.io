@@ -125,4 +125,11 @@ paginate = 5
 # End of module.
 
 
+[markup]
+	[markup.goldmark]
+		[markup.goldmark.renderer]
+			      unsafe = true
+# End of markup.
+
+
 # End of file.
