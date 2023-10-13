@@ -60,7 +60,6 @@ for md_file in **/*.md; do
 		sed -i "1s/^/$delimiter\n$yaml_dates\n$delimiter\n\n/" $md_file
 	else
 		num_delim=0
-		yaml_dates=""
 
 		while IFS= read -r line; do
 			if [[ "$line" == "$delimiter" ]]; then
@@ -76,7 +75,7 @@ for md_file in **/*.md; do
 				yaml_dates="$last_modified_yaml"
 				break
 			fi
-		done
+		done < $md_file
 
 		sed -i "1s/^.*$/$delimiter\n$yaml_dates\n/" $md_file
 	fi
