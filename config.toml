@@ -1,4 +1,9 @@
+# Site meta information.
 baseurl = "https://bodha.siddh.me"
+title = "Bodha"
+subtitle = "Big Thonk"
+owner = "Siddh Raman Pant"
+author = "Siddh Raman Pant"
 languageCode = "en-in"
 
 # Add it only if you keep the theme in the `themes` directory.
@@ -76,6 +81,7 @@ paginate = 5
 			title = "Bodha"
 			subtitle = "Big Thonk"
 			owner = "Siddh Raman Pant"
+			author = "Siddh Raman Pant"
 			keywords = ""
 			menuMore = "Show more"
 			readMore = "Read more"
