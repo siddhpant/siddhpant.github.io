@@ -1,8 +1,9 @@
 <!-- Override and add custom footer. -->
 
 
-© {{ now.Year }} Siddh Raman Pant
-<br>
+© {{ $.Site.Params.CopyrightStartYear }} - {{ now.Year }}
+{{ $.Site.Params.Author }}<br>
+
 <a href="/about#license">License</a>
 ::
 <a href="/about#sources">Sources</a>

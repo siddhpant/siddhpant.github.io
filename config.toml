@@ -15,6 +15,7 @@ paginate = 5
 	# Some more site meta information.
 	subtitle = "Big Thonk"
 	owner = "Siddh Raman Pant"
+	copyrightStartYear = 2023
 
 	# dir name of your main content (default is `content/posts`).
 	# the list of set content will show up on your index page (baseurl).
